@@ -1,20 +1,41 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    
+    checkAuth();
+  }, []);
+
+  const checkAuth = () => {
+    const token = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+
+    if (!token || !storedUser) {
+      
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      setUser(null);
+      navigate('/login');
+    } else {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+        navigate('/login');
+      }
     }
     setLoading(false);
-  }, []);
+  };
 
   const login = (userData) => {
     setUser(userData);
@@ -25,6 +46,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    navigate('/login');
   };
 
   return (
