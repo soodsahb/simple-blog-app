@@ -1,13 +1,11 @@
-
+// src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     checkAuth();
@@ -18,20 +16,20 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem('user');
 
     if (!token || !storedUser) {
-      
+      // If either token or user is missing, clear everything
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       setUser(null);
-      navigate('/login');
+      window.location.href = '/login'; // Use window.location instead of navigate
     } else {
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
-        
+        // If stored user data is invalid, clear everything
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
-        navigate('/login');
+        window.location.href = '/login';
       }
     }
     setLoading(false);
@@ -46,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    navigate('/login');
+    window.location.href = '/login';
   };
 
   return (
