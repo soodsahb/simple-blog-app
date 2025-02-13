@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import EditPost from "./pages/EditPost";
 import SinglePost from "./pages/SinglePost";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider,CssBaseline } from "@mui/material";
 import { theme } from "./theme";
 import { Toaster } from "react-hot-toast";
 import Profile from "./pages/Profile";
@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 function App() {
   return (
     <ThemeProvider theme={theme}>
+       <CssBaseline />
       <AuthProvider>
         <Toaster
           position="top-right"

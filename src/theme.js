@@ -1,4 +1,3 @@
-
 import { createTheme } from '@mui/material';
 
 export const theme = createTheme({
@@ -8,6 +7,10 @@ export const theme = createTheme({
     },
     secondary: {
       main: '#dc004e',
+    },
+    background: {
+      default: '#f5f5f5', // Added this
+      paper: '#ffffff',   // Added this for cards/paper components
     },
   },
   typography: {
@@ -23,6 +26,14 @@ export const theme = createTheme({
     ].join(','),
   },
   components: {
+    MuiCssBaseline: {  // Added this
+      styleOverrides: {
+        body: {
+          backgroundColor: '#f5f5f5',
+          minHeight: '100vh',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -40,5 +51,3 @@ export const theme = createTheme({
     },
   },
 });
-
-
