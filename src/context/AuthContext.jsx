@@ -1,4 +1,4 @@
-// src/context/AuthContext.jsx
+
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -8,32 +8,13 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = () => {
-    const token = localStorage.getItem('token');
+    
     const storedUser = localStorage.getItem('user');
-
-    if (!token || !storedUser) {
-      // If either token or user is missing, clear everything
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      setUser(null);
-      window.location.href = '/login'; // Use window.location instead of navigate
-    } else {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        // If stored user data is invalid, clear everything
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        setUser(null);
-        window.location.href = '/login';
-      }
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
     setLoading(false);
-  };
+  }, []);
 
   const login = (userData) => {
     setUser(userData);
@@ -44,7 +25,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    window.location.href = '/login';
   };
 
   return (
