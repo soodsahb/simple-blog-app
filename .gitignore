@@ -13,12 +13,10 @@ dist-ssr
 *.local
 node_modules/
 dist/
-.env
 
 
 
 # Editor directories and files
-.vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -27,3 +25,4 @@ dist/
 *.njsproj
 *.sln
 *.sw?
+config.bat
